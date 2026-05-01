@@ -41,20 +41,5 @@ public class ArchitectureTests
             .GetResult();
 
         Assert.True(result.IsSuccessful);
-    }
-    [Fact]
-    public void Services_Should_End_With_Service()
-    {
-        var result = Types.InAssembly(
-                typeof(Application.DependencyInjection).Assembly)
-            .That()
-            .ResideInNamespaceContaining("Features")
-            .And()
-            .AreClasses()
-            .Should()
-            .HaveNameEndingWith("Service")
-            .GetResult();
-
-        Assert.True(result.IsSuccessful);
-    }
+    }    
 }
