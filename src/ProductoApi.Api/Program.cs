@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProductoApi.Api.GraphQL.Mutations;
+using ProductoApi.Api.GraphQL.Queries;
 using ProductoApi.Application;
 using ProductoApi.Application.Features.Products;
 using ProductoApi.Application.Features.Products.Requests;
@@ -10,6 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+// Configuración GraphQL
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<ProductQuery>()
+    .AddMutationType<ProductMutation>()
+    .AddFiltering()
+    .AddSorting();
+
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -39,6 +50,9 @@ if (app.Environment.IsDevelopment())
         options.Theme = ScalarTheme.DeepSpace;
     });
 }
+// Endpoint GraphQL
+app.MapGraphQL();
+
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.MapControllers();
