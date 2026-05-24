@@ -21,6 +21,9 @@ builder.Services
     .AddFiltering()
     .AddSorting();
 
+// Configuración gRPC
+builder.Services.AddGrpc();
+
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -50,11 +53,15 @@ if (app.Environment.IsDevelopment())
         options.Theme = ScalarTheme.DeepSpace;
     });
 }
+// Redireccionar HTTP a HTTPS
+app.UseHttpsRedirection();
+// Habilitar CORS
+app.UseCors("AllowAll");
 // Endpoint GraphQL
 app.MapGraphQL();
-
-app.UseCors("AllowAll");
-app.UseHttpsRedirection();
+// Endpoint gRPC
+app.MapGrpcService<ProductoApi.Api.Grpc.Services.ProductGrpcService>();
+// Endpoint REST
 app.MapControllers();
 
 //Minamal APi

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.80.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="16.0.7" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="16.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
@@ -20,6 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\ProductoApi.Application\ProductoApi.Application.csproj" />
     <ProjectReference Include="..\ProductoApi.Infrastructure\ProductoApi.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Grpc/Protos/product.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

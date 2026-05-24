@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option csharp_namespace = "ProductoApi.Api.Grpc";
+
+package product;
+
+service ProductGrpc {
+
+  rpc GetById (GetByIdRequest) returns (ProductResponse);
+  rpc GetAll (Empty) returns (ProductListResponse);
+  rpc Create (CreateProductRequest) returns (CreateProductResponse);
+  rpc Update (UpdateProductRequest) returns (BoolResponse);
+  rpc Delete (DeleteProductRequest) returns (BoolResponse);
+}
+
+message Empty {}
+
+
+// =========================
+// REQUESTS
+// =========================
+
+message GetByIdRequest {
+  string id = 1;
+}
+
+message DeleteProductRequest {
+  string id = 1;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+}
+
+message UpdateProductRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+
+// =========================
+// RESPONSES
+// =========================
+
+message ProductResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+message ProductListResponse {
+  repeated ProductResponse products = 1;
+}
+
+message CreateProductResponse {
+  string id = 1;
+}
+
+message BoolResponse {
+  bool success = 1;
+}
